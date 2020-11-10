@@ -72,10 +72,30 @@ public class DynamicArray<E> {
 			elemArray[i] = elemArray[i+1];
 		}
 		size--;
+		trim();
 	}
 	
 	public void cleanAllElement() {
 		size = 0;
+		//缩容至默认容量
+		elemArray = (E[]) new Object[DEFAULT_Capacity];
+	}
+	
+	/**
+	 * 缩容
+	 */
+	
+	public void trim() {
+		int oldSize = elemArray.length;
+		int newSize = oldSize >> 1;
+		
+		if (size >= newSize && newSize <= DEFAULT_Capacity) {return;}
+		E[] newArray = (E[]) new Object[newSize];
+		
+		for (int i = 0; i < size; i++) {
+			newArray[i] = elemArray[i];
+		}
+		elemArray = newArray;
 	}
 	
 	/**
